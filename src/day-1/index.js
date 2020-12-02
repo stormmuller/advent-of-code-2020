@@ -1,6 +1,5 @@
-import fs from 'fs';
-import { promisify } from 'util';
 import { sum, product } from 'ramda';
+import { processFile, splitByNewLine } from '../lib';
 
 const TOTAL = 2020;
 
@@ -8,10 +7,7 @@ export const run = async ({
   file,
   part
 }) => {
-  const readFile = promisify(fs.readFile);
-  const text = await readFile(`${__dirname}/input/${file}`, 'utf8');
-
-  const arr = text.split('\r\n');
+  const arr = await processFile(`${__dirname}/input/${file}`, splitByNewLine);
   const numbers = [];
 
   callRecursively(numbers, arr, partLookup[part]);

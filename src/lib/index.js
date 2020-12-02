@@ -1,0 +1,1 @@
+export { processFile, noOp, splitByNewLine } from './process-file';
