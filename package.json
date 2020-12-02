@@ -1,0 +1,31 @@
+{
+  "name": "advent-of-code-2020",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel ./src -d ./dist",
+    "start": "nodemon --exec babel-node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stormmuller/advent-of-code-2020.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stormmuller/advent-of-code-2020/issues"
+  },
+  "homepage": "https://github.com/stormmuller/advent-of-code-2020#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.9",
+    "@babel/node": "^7.12.6",
+    "@babel/preset-env": "^7.12.7",
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "yargs": "^16.1.1"
+  }
+}
