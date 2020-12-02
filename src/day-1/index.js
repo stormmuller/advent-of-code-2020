@@ -1,28 +1,42 @@
 import fs from 'fs';
 import { promisify } from 'util';
+import { sum, product } from 'ramda';
 
-export const run = async ({ 
-  file
+const TOTAL = 2020;
+
+export const run = async ({
+  file,
+  part
 }) => {
   const readFile = promisify(fs.readFile);
   const text = await readFile(`${__dirname}/input/${file}`, 'utf8');
 
   const arr = text.split('\r\n');
+  const numbers = [];
 
-  for (let i = 0; i < arr.length; i++) {
-    const comparingTo = Number(arr[i]);
-    for (let j = i + 1; j < arr.length; j++) {
-      const comparingAgainst = Number(arr[j]);
-      const sum = comparingTo + comparingAgainst;
+  callRecursively(numbers, arr, partLookup[part]);
+};
 
-      if (sum === 2020) {
-        const product = comparingTo * comparingAgainst;
+const callRecursively = (numbers, arr, maxLevel, level = 0, i = -1) => {
+  for (let j = i + 1; j < arr.length; j++) {
+    numbers[level] = Number(arr[j]);
 
-        console.log(`Sum of ${comparingTo} and ${comparingAgainst} is ${sum}`);
-        console.log(`Product of ${comparingTo} and ${comparingAgainst} is ${product}`);
-      }
-    }    
+    if (level !== maxLevel - 1) {
+      callRecursively(numbers, arr, maxLevel, level + 1, j);
+    } else {
+      const sumOfNumbers = sum(numbers);
+
+        if (sumOfNumbers === TOTAL) {
+          const productOfNumbers = product(numbers);
+
+          console.log(`Sum of ${numbers} is ${sumOfNumbers}`);
+          console.log(`Product of ${numbers} is ${productOfNumbers}`);
+        }
+    }
   }
+};
 
-  console.log();
+const partLookup = {
+  [1]: 2,
+  [2]: 3
 };
