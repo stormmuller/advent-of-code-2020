@@ -21,3 +21,5 @@ npm start -- --day=1 --part=1 --file=puzzle.txt
 | 2   	| 1    	| puzzle.txt  	| 517       	|
 | 2   	| 2    	| example.txt 	| 1         	|
 | 2   	| 2    	| puzzle.txt  	| 284       	|
+| 3   	| 1    	| example.txt 	| 7         	|
+| 3   	| 1    	| puzzle.txt  	| 153       	|
