@@ -1,5 +1,5 @@
-import { replace, map, split, forEach } from 'ramda';
-import { processFile, splitByNewLine } from '../lib';
+import { sum, product } from 'ramda';
+import { processFile, replaceChar, splitByNewLine } from '../lib';
 
 export const run = async ({
   file,
@@ -9,36 +9,55 @@ export const run = async ({
   let treesEncountered = 0;
 
   if (part === 1) {
-    treesEncountered = part1(lines);
+    treesEncountered = calculate(lines)(1, 7);
+  }
+
+  if (part === 2) {
+    const treesPerSlope = [];
+    treesPerSlope.push(calculate(lines)(1, 1));
+    treesPerSlope.push(calculate(lines)(1, 3));
+    treesPerSlope.push(calculate(lines)(1, 5));
+    treesPerSlope.push(calculate(lines)(1, 7));
+    treesPerSlope.push(calculate(lines)(2, 1));
+
+    treesEncountered = sum(treesPerSlope);
+    console.log(`Number of trees encountered: ${product(treesPerSlope)}`);
   }
 
   console.log(`Number of trees encountered: ${treesEncountered}`);
 };
 
-const part1 = lines => {
+const calculate = (lines) => (maxRise, maxRun) => {
   let treesEncountered = 0;
-  let drop = 0;
+  let rise = 0, run = maxRun;
 
-  const maxDrop = 1;
-  const maxRun = 3;
   const width = lines[0].length;
 
   for (let i = 0; i < lines.length; i++) {
-    if (drop === maxDrop) {
-      const line = lines[i];
+    const line = lines[i];
+    let lineCopy = line;
 
-      const index = (i * maxRun) % width;
+    if (rise === maxRise) {
+      const index = run % width;
       const char = line[index];
+      run += maxRun;
 
       if (char === '#') {
         treesEncountered++;
-      } 
+        lineCopy = replaceChar(index, 'X', lineCopy);
+      } else {
+        lineCopy = replaceChar(index, '0', lineCopy);
+      }
 
-      drop = 0;
+      rise = 0;
     }
 
-    drop++;
+    console.log(lineCopy);
+
+    rise++;
   }
+
+  console.log(`Trees encountered: ${treesEncountered} for slop: ${maxRise}:${maxRun}`);
 
   return treesEncountered;
 }
